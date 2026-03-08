@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: game-2048-django
+    runtime: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn game2048.wsgi:application
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: false
+      - key: DJANGO_ALLOWED_HOSTS
+        value: .onrender.com
+      - key: CSRF_TRUSTED_ORIGINS
+        value: https://*.onrender.com
+      - key: PYTHON_VERSION
+        value: 3.12.6

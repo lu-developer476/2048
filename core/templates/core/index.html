@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="2048 Gamer Edition - Juego estilo cyberpunk con Django, JavaScript y Render.">
+  <title>2048</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/css/styles.css' %}">
+  <link rel="icon" type="image/png" href="{% static 'core/favicon.png' %}">
+  <link rel="apple-touch-icon" href="{% static 'core/favicon.png' %}">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <main class="game-shell">
+    <section class="hud">
+      <div class="brand-box panel-glow">
+        <p class="eyebrow">ARCADE PROTOCOLS</p>
+        <h1>2048<span>2077 EDITION</span></h1>
+        <p class="tagline">Fusioná bloques, alcanzá la puntuación máxima o superá el último récord. ¡A dominar el tablero!</p>
+      </div>
+
+      <div class="stats-grid">
+      
+        <article class="stat-card panel-glow">
+          <span class="stat-label">SCORE</span>
+          <strong id="score" class="score-value">0</strong>
+        </article>
+
+        <article class="stat-card panel-glow">
+          <span class="stat-label">BEST</span>
+          <strong id="best-score" class="score-value">0</strong>
+        </article>
+      
+        <article class="stat-card panel-glow small">
+          <span class="stat-label">MOVES</span>
+          <strong id="moves">0</strong>
+        </article>
+      
+        <article class="stat-card panel-glow small">
+          <span class="stat-label">STATUS</span>
+          <strong id="status-text">ONLINE</strong>
+        </article>
+      
+        <article class="stat-card panel-glow small">
+          <span class="stat-label">SESSION</span>
+          <strong id="session-id">---</strong>
+        </article>
+      
+        <article class="stat-card panel-glow small">
+          <span class="stat-label">TIME</span>
+          <strong id="time-played">00:00</strong>
+        </article>
+      
+        <article class="stat-card panel-glow small stat-level-card">
+          <span class="stat-label">LEVEL</span>
+          <strong id="level-tile" class="level-display">2</strong>
+        </article>
+      
+      </div>
+
+    </section>
+
+    <section class="arena panel-glow">
+      <div class="board-frame">
+        <div class="board" id="board" aria-label="Tablero 2048"></div>
+
+        <div class="overlay hidden" id="overlay">
+          <div class="overlay-card panel-glow">
+            <h2 id="overlay-title">Game Over</h2>
+            <p id="overlay-message">Te quedaste sin movimientos.</p>
+            <div class="overlay-actions">
+              <button id="overlay-cancel" class="btn secondary hidden">Cancelar</button>
+              <button id="overlay-action" class="btn primary">Jugar otra vez</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div class="legend-title">Nivel de bloque</div>
+        <div class="legend-row">
+          <span class="mini-tile lvl-2">2</span>
+          <span class="mini-tile lvl-4">4</span>
+          <span class="mini-tile lvl-8">8</span>
+          <span class="mini-tile lvl-16">16</span>
+          <span class="mini-tile lvl-32">32</span>
+          <span class="mini-tile lvl-64">64</span>
+          <span class="mini-tile lvl-128">128</span>
+          <span class="mini-tile lvl-256">256</span>
+          <span class="mini-tile lvl-512">512</span>
+          <span class="mini-tile lvl-1024">1024</span>
+          <span class="mini-tile lvl-2048">2048</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="aux-panels">
+      <div class="controls panel-glow">
+        <button id="new-game-btn" class="btn primary">Nueva partida</button>
+        <button id="undo-btn" class="btn secondary">Pausar</button>
+        <button id="clear-save-btn" class="btn danger">Reiniciar</button>
+      </div>
+
+      <div class="tips panel-glow">
+        <p><span>Controles:</span> ↑↓←→ · WASD · Desliz</p>
+        <p><span>Objetivo:</span> Llega a 2048 puntos, choom... luego intenta superarlo.</p>
+      </div>
+
+      <div class="leaderboard panel-glow">
+        <div class="leaderboard-header">
+          <p class="eyebrow">ONLINE RANKING</p>
+          <h2>Top Players</h2>
+        </div>
+
+        <div id="leaderboard-content" class="leaderboard-content">
+          <p class="leaderboard-empty">Todavía no hay puntajes cargados. Sé el primero en dejar tu marca.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="footer-item">© <span id="year"></span> Todos los derechos reservados</span>
+    <span class="footer-separator" aria-hidden="true">•</span>
+    <span class="footer-item">Built with Python &amp; Django</span>
+    <span class="footer-separator" aria-hidden="true">•</span>
+    <span class="footer-item">UX/UI Interface</span>
+    <span class="footer-separator" aria-hidden="true">•</span>
+    <span class="footer-item">Deployed on Render ®</span>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  <script src="{% static 'core/js/game.js' %}?v=overlay-confirm-v2"></script>
+</body>
+</html>
