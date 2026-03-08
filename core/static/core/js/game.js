@@ -23,6 +23,8 @@ const restartBtn = document.getElementById('clear-save-btn');
 const leaderboardContentEl = document.getElementById('leaderboard-content');
 const soundVolumeEl = document.getElementById('sound-volume');
 const soundToggleEl = document.getElementById('sound-toggle');
+const soundStateTextEl = document.getElementById('sound-state-text');
+const soundLevelEl = document.getElementById('sound-level');
 
 let state = null;
 let previousState = null;
@@ -401,9 +403,25 @@ function updateSoundUI() {
 
   const percent = Math.round(FX.masterVolume * 100);
   soundVolumeEl.value = String(percent);
+  soundVolumeEl.style.setProperty('--sound-progress', `${percent}%`);
 
-  soundToggleEl.textContent = percent === 0 ? 'MUTE' : `${percent}%`;
-  soundToggleEl.classList.toggle('danger', percent === 0);
+  const isMuted = percent === 0;
+  const iconEl = soundToggleEl.querySelector('.sound-toggle-icon');
+
+  if (iconEl) {
+    iconEl.textContent = isMuted ? '🔇' : '🔊';
+  }
+
+  if (soundStateTextEl) {
+    soundStateTextEl.textContent = isMuted ? 'Sonido apagado' : 'Sonido activo';
+  }
+
+  if (soundLevelEl) {
+    soundLevelEl.textContent = isMuted ? 'MUTE' : `${percent}%`;
+  }
+
+  soundToggleEl.classList.toggle('is-muted', isMuted);
+  soundToggleEl.setAttribute('aria-pressed', String(!isMuted));
 }
 
 function setupSoundControls() {

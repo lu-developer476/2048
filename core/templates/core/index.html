@@ -62,20 +62,23 @@
         </article>
 
         <article class="stat-card panel-glow sound-card">
-          <span class="stat-label">SOUND</span>
-          <div class="sound-controls">
-            <input
-              id="sound-volume"
-              class="sound-slider"
-              type="range"
-              min="0"
-              max="100"
-              step="1"
-              value="70"
-              aria-label="Volumen del juego"
-            >
-            <button id="sound-toggle" class="btn secondary sound-toggle" type="button">70%</button>
-          </div>
+          <span class="stat-label">AUDIO</span>
+          <button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="false">
+            <span class="sound-toggle-icon" aria-hidden="true">🔊</span>
+            <span id="sound-state-text" class="sound-state-text">Sonido activo</span>
+            <span id="sound-level" class="sound-level">70%</span>
+          </button>
+          <label for="sound-volume" class="sound-volume-label">Volumen</label>
+          <input
+            id="sound-volume"
+            class="sound-slider"
+            type="range"
+            min="0"
+            max="100"
+            step="1"
+            value="70"
+            aria-label="Volumen del juego"
+          >
         </article>
       
       </div>
