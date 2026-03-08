@@ -173,6 +173,33 @@ body {
   font-size: clamp(1.25rem, 2.4vw, 1.8rem);
 }
 
+
+.sound-card {
+  grid-column: 1 / -1;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.sound-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.sound-slider {
+  flex: 1;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+.sound-toggle {
+  min-width: 76px;
+  min-height: 38px;
+  border-radius: 12px;
+  font-size: 0.76rem;
+}
+
 /* ARENA */
 
 .arena {

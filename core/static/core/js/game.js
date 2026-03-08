@@ -2,6 +2,7 @@ const GRID_SIZE = 4;
 const STORAGE_KEY = 'gamer-2048-save';
 const BEST_SCORE_KEY = 'gamer-2048-best';
 const LEADERBOARD_SENT_KEY = 'gamer-2048-last-sent';
+const SOUND_VOLUME_KEY = 'gamer-2048-volume';
 
 const boardEl = document.getElementById('board');
 const scoreEl = document.getElementById('score');
@@ -20,6 +21,8 @@ const newGameBtn = document.getElementById('new-game-btn');
 const pauseBtn = document.getElementById('undo-btn');
 const restartBtn = document.getElementById('clear-save-btn');
 const leaderboardContentEl = document.getElementById('leaderboard-content');
+const soundVolumeEl = document.getElementById('sound-volume');
+const soundToggleEl = document.getElementById('sound-toggle');
 
 let state = null;
 let previousState = null;
@@ -36,6 +39,8 @@ let overlayConfirmHandler = null;
 const FX = {
   audioContext: null,
   enabled: true,
+  masterVolume: 0.7,
+  lastNonZeroVolume: 0.7,
 
   init() {
     if (this.audioContext) return;
@@ -60,6 +65,22 @@ const FX = {
     }
   },
 
+
+  setVolume(volume, { persist = true } = {}) {
+    const next = Math.min(Math.max(Number(volume) || 0, 0), 1);
+    this.masterVolume = next;
+
+    if (next > 0) {
+      this.lastNonZeroVolume = next;
+    }
+
+    if (persist) {
+      localStorage.setItem(SOUND_VOLUME_KEY, String(Math.round(next * 100)));
+    }
+
+    updateSoundUI();
+  },
+
   tone({
     frequency = 440,
     type = 'sine',
@@ -70,6 +91,10 @@ const FX = {
     detune = 0,
   }) {
     if (!this.enabled) return;
+
+    const effectiveVolume = volume * this.masterVolume;
+
+    if (effectiveVolume <= 0.0001) return;
 
     this.init();
     const ctx = this.audioContext;
@@ -84,7 +109,7 @@ const FX = {
     osc.detune.setValueAtTime(detune, now);
 
     gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.linearRampToValueAtTime(volume, now + attack);
+    gain.gain.linearRampToValueAtTime(effectiveVolume, now + attack);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + duration + release);
 
     osc.connect(gain);
@@ -359,6 +384,52 @@ function setBestScore(score) {
 
 function getLastSentScoreSignature() {
   return localStorage.getItem(LEADERBOARD_SENT_KEY) || '';
+}
+
+function getSavedVolume() {
+  const savedVolume = Number(localStorage.getItem(SOUND_VOLUME_KEY));
+
+  if (!Number.isFinite(savedVolume)) {
+    return 0.7;
+  }
+
+  return Math.min(Math.max(savedVolume, 0), 100) / 100;
+}
+
+function updateSoundUI() {
+  if (!soundVolumeEl || !soundToggleEl) return;
+
+  const percent = Math.round(FX.masterVolume * 100);
+  soundVolumeEl.value = String(percent);
+
+  soundToggleEl.textContent = percent === 0 ? 'MUTE' : `${percent}%`;
+  soundToggleEl.classList.toggle('danger', percent === 0);
+}
+
+function setupSoundControls() {
+  const savedVolume = getSavedVolume();
+  FX.setVolume(savedVolume, { persist: false });
+
+  if (!soundVolumeEl || !soundToggleEl) {
+    return;
+  }
+
+  soundVolumeEl.addEventListener('input', () => {
+    FX.setVolume(Number(soundVolumeEl.value) / 100);
+  });
+
+  soundToggleEl.addEventListener('click', () => {
+    FX.resume();
+
+    if (FX.masterVolume > 0) {
+      FX.setVolume(0);
+      return;
+    }
+
+    FX.setVolume(FX.lastNonZeroVolume || 0.7);
+  });
+
+  updateSoundUI();
 }
 
 function setLastSentScoreSignature(signature) {
@@ -1178,6 +1249,7 @@ if (overlayCancelEl) {
 }
 
 setupAudioUnlock();
+setupSoundControls();
 restoreOrStart();
 updateTimer();
 loadLeaderboard();
