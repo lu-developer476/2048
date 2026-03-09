@@ -25,6 +25,10 @@ const soundVolumeEl = document.getElementById('sound-volume');
 const soundToggleEl = document.getElementById('sound-toggle');
 const soundStateTextEl = document.getElementById('sound-state-text');
 const soundLevelEl = document.getElementById('sound-level');
+const namePromptEl = document.getElementById('name-prompt');
+const namePromptInputEl = document.getElementById('name-prompt-input');
+const namePromptAcceptEl = document.getElementById('name-prompt-accept');
+const namePromptCancelEl = document.getElementById('name-prompt-cancel');
 
 let state = null;
 let previousState = null;
@@ -37,6 +41,7 @@ let sessionId = Math.random().toString(36).slice(2, 8).toUpperCase();
 let sessionStartTime = Date.now();
 let overlayMode = null;
 let overlayConfirmHandler = null;
+let namePromptResolver = null;
 
 const FX = {
   audioContext: null,
@@ -458,6 +463,39 @@ function buildScoreSignature() {
   return `${state.score}-${state.moves}-${findMaxTile(state.grid)}`;
 }
 
+function requestPlayerName(defaultName = 'Player') {
+  if (!namePromptEl || !namePromptInputEl || !namePromptAcceptEl || !namePromptCancelEl) {
+    return Promise.resolve(defaultName);
+  }
+
+  if (namePromptResolver) {
+    return Promise.resolve(null);
+  }
+
+  namePromptEl.classList.remove('hidden');
+  namePromptInputEl.value = defaultName;
+
+  requestAnimationFrame(() => {
+    namePromptInputEl.focus();
+    namePromptInputEl.select();
+  });
+
+  return new Promise((resolve) => {
+    namePromptResolver = resolve;
+  });
+}
+
+function resolvePlayerNamePrompt(value) {
+  if (!namePromptResolver) {
+    return;
+  }
+
+  const resolver = namePromptResolver;
+  namePromptResolver = null;
+  namePromptEl.classList.add('hidden');
+  resolver(value);
+}
+
 async function submitScoreToLeaderboard() {
   if (!state || state.score <= 0) return;
 
@@ -467,7 +505,7 @@ async function submitScoreToLeaderboard() {
     return;
   }
 
-  let playerName = window.prompt('Ingresá tu nombre para el ranking online:', 'Player');
+  let playerName = await requestPlayerName('Player');
 
   if (playerName === null) return;
 
@@ -1152,6 +1190,10 @@ function confirmRestartCurrentGame() {
 }
 
 function handleKey(event) {
+  if (namePromptResolver) {
+    return;
+  }
+
   const key = event.key.toLowerCase();
 
   const map = {
@@ -1263,6 +1305,32 @@ if (overlayCancelEl) {
     }
 
     hideOverlay();
+  });
+}
+
+
+if (namePromptAcceptEl && namePromptInputEl) {
+  namePromptAcceptEl.addEventListener('click', () => {
+    resolvePlayerNamePrompt(namePromptInputEl.value);
+  });
+
+  namePromptInputEl.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      resolvePlayerNamePrompt(namePromptInputEl.value);
+      return;
+    }
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      resolvePlayerNamePrompt(null);
+    }
+  });
+}
+
+if (namePromptCancelEl) {
+  namePromptCancelEl.addEventListener('click', () => {
+    resolvePlayerNamePrompt(null);
   });
 }
 
