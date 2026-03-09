@@ -144,6 +144,25 @@
     </section>
   </main>
 
+  <div class="name-prompt-overlay hidden" id="name-prompt" role="dialog" aria-modal="true" aria-labelledby="name-prompt-title">
+    <div class="name-prompt-card panel-glow">
+      <h2 id="name-prompt-title">Ranking online</h2>
+      <p>Ingresá tu nombre para guardar el puntaje.</p>
+      <input
+        id="name-prompt-input"
+        class="name-prompt-input"
+        type="text"
+        maxlength="30"
+        autocomplete="nickname"
+        placeholder="Player"
+      >
+      <div class="overlay-actions">
+        <button id="name-prompt-cancel" class="btn secondary" type="button">Cancelar</button>
+        <button id="name-prompt-accept" class="btn primary" type="button">Aceptar</button>
+      </div>
+    </div>
+  </div>
+
   <footer class="footer">
     <span class="footer-item">© <span id="year"></span> Todos los derechos reservados</span>
     <span class="footer-separator" aria-hidden="true">•</span>
@@ -157,6 +176,6 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-  <script src="{% static 'core/js/game.js' %}?v=overlay-confirm-v2"></script>
+  <script src="{% static 'core/js/game.js' %}?v=overlay-confirm-v3"></script>
 </body>
 </html>

@@ -472,6 +472,55 @@ body {
   display: none;
 }
 
+
+.name-prompt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(5, 8, 18, 0.78);
+}
+
+.name-prompt-overlay.hidden {
+  display: none;
+}
+
+.name-prompt-card {
+  width: min(520px, 100%);
+  padding: 24px;
+  text-align: left;
+  border-radius: 20px;
+}
+
+.name-prompt-card h2 {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.name-prompt-card p {
+  margin: 10px 0 14px;
+  color: var(--muted);
+}
+
+.name-prompt-input {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  border: 1px solid rgba(35,245,218,0.45);
+  background: rgba(10, 17, 29, 0.85);
+  color: var(--text);
+  padding: 0 14px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem;
+}
+
+.name-prompt-input:focus {
+  outline: 2px solid rgba(35,245,218,0.8);
+  outline-offset: 2px;
+}
+
 /* BOTTOM PANELS */
 
 .aux-panels {
