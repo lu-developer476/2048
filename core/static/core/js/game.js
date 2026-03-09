@@ -46,6 +46,7 @@ let namePromptResolver = null;
 const FX = {
   audioContext: null,
   enabled: true,
+  unlocked: false,
   masterVolume: 0.7,
   lastNonZeroVolume: 0.7,
 
@@ -69,6 +70,10 @@ const FX = {
     this.init();
     if (this.audioContext?.state === 'suspended') {
       this.audioContext.resume().catch(() => {});
+    }
+
+    if (this.audioContext?.state === 'running') {
+      this.unlocked = true;
     }
   },
 
@@ -1252,10 +1257,32 @@ function handleTouchMove(event) {
 }
 
 function setupAudioUnlock() {
-  const unlock = () => FX.resume();
+  const unlock = () => {
+    FX.resume();
+
+    if (!FX.unlocked) {
+      return;
+    }
+
+    window.removeEventListener('pointerdown', unlock);
+    window.removeEventListener('touchstart', unlock);
+    window.removeEventListener('mousedown', unlock);
+    window.removeEventListener('click', unlock);
+    window.removeEventListener('keydown', unlock);
+  };
 
   window.addEventListener('pointerdown', unlock, { passive: true });
-  window.addEventListener('keydown', unlock, { passive: true, once: false });
+  window.addEventListener('touchstart', unlock, { passive: true });
+  window.addEventListener('mousedown', unlock, { passive: true });
+  window.addEventListener('click', unlock, { passive: true });
+  window.addEventListener('keydown', unlock, { passive: true });
+  window.addEventListener('pageshow', unlock, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+      FX.resume();
+    }
+  });
 }
 
 window.addEventListener('keydown', handleKey);
