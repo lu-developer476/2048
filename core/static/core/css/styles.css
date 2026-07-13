@@ -87,22 +87,62 @@ body {
   text-decoration: none;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
-  min-width: 150px;
+  min-width: 170px;
+  padding: 7px 10px 8px;
+  text-align: center;
+  border-radius: 15px;
+  background:
+    linear-gradient(180deg, rgba(11, 15, 22, 0.96), rgba(27, 10, 18, 0.96)),
+    radial-gradient(circle at 50% 0%, rgba(237, 194, 46, 0.18), transparent 65%);
+  border: 2px solid rgba(237, 194, 46, 0.72);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 246, 214, 0.08),
+    0 0 18px rgba(237, 194, 46, 0.22),
+    0 0 30px rgba(35, 245, 218, 0.10);
 }
 
-.nav-brand .eyebrow { font-size: 0.58rem; letter-spacing: 0.16em; }
+.nav-brand .eyebrow {
+  color: #edc22e;
+  font-size: 0.55rem;
+  letter-spacing: 0.2em;
+  text-shadow: 0 0 10px rgba(237, 194, 46, 0.35);
+}
 
 .nav-brand strong {
   font-family: 'Orbitron', sans-serif;
-  font-size: clamp(1.15rem, 2vw, 1.7rem);
-  letter-spacing: 0.05em;
+  font-size: clamp(1.35rem, 2.15vw, 1.95rem);
+  letter-spacing: 0.06em;
+  color: #f9f6f2;
+  text-shadow: 0 0 14px rgba(249, 246, 242, 0.25);
 }
 
 .nav-brand strong span {
   color: var(--accent);
   font-size: 0.58em;
   margin-left: 6px;
+}
+
+.brand-edition {
+  margin-top: 3px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #edc22e;
+}
+
+.brand-legend {
+  margin-top: 4px;
+  max-width: 21ch;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 0.95;
+  color: var(--muted);
 }
 
 .nav-actions {
