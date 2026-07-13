@@ -17,6 +17,9 @@ const overlayTitleEl = document.getElementById('overlay-title');
 const overlayMessageEl = document.getElementById('overlay-message');
 const overlayActionEl = document.getElementById('overlay-action');
 const overlayCancelEl = document.getElementById('overlay-cancel');
+const playMenuBtn = document.getElementById('play-menu-btn');
+const gameMenuEl = document.getElementById('game-menu');
+const gameMenuCloseBtn = document.getElementById('game-menu-close');
 const newGameBtn = document.getElementById('new-game-btn');
 const pauseBtn = document.getElementById('undo-btn');
 const restartBtn = document.getElementById('clear-save-btn');
@@ -42,6 +45,18 @@ let sessionStartTime = Date.now();
 let overlayMode = null;
 let overlayConfirmHandler = null;
 let namePromptResolver = null;
+
+function openGameMenu() {
+  if (!gameMenuEl) return;
+
+  gameMenuEl.classList.remove('hidden');
+  newGameBtn?.focus();
+}
+
+function closeGameMenu() {
+  gameMenuEl?.classList.add('hidden');
+  playMenuBtn?.focus();
+}
 
 const FX = {
   audioContext: null,
@@ -1218,6 +1233,12 @@ function handleKey(event) {
     return;
   }
 
+  if (key === 'escape' && gameMenuEl && !gameMenuEl.classList.contains('hidden')) {
+    event.preventDefault();
+    closeGameMenu();
+    return;
+  }
+
   if (key === 'u') {
     event.preventDefault();
     undoMove();
@@ -1292,18 +1313,40 @@ boardEl.addEventListener('touchstart', handleTouchStart, { passive: true });
 boardEl.addEventListener('touchend', handleTouchEnd, { passive: true });
 boardEl.addEventListener('touchmove', handleTouchMove, { passive: false });
 
+if (playMenuBtn) {
+  playMenuBtn.addEventListener('click', () => {
+    FX.resume();
+    openGameMenu();
+  });
+}
+
+if (gameMenuCloseBtn) {
+  gameMenuCloseBtn.addEventListener('click', closeGameMenu);
+}
+
+if (gameMenuEl) {
+  gameMenuEl.addEventListener('click', (event) => {
+    if (event.target === gameMenuEl) {
+      closeGameMenu();
+    }
+  });
+}
+
 newGameBtn.addEventListener('click', () => {
   FX.resume();
+  closeGameMenu();
   confirmNewGame();
 });
 
 pauseBtn.addEventListener('click', () => {
   FX.resume();
+  closeGameMenu();
   togglePause();
 });
 
 restartBtn.addEventListener('click', () => {
   FX.resume();
+  closeGameMenu();
   confirmRestartCurrentGame();
 });
 
