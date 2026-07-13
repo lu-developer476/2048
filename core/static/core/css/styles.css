@@ -649,11 +649,18 @@ body {
 
 .controls,
 .tips,
-.leaderboard {
+.aux-panels > .leaderboard {
   padding: 12px;
   text-align: center;
   min-height: 112px;
   height: 100%;
+}
+
+.nav-popover.leaderboard {
+  height: auto;
+  min-height: 0;
+  max-height: calc(100vh - 88px);
+  overflow-y: auto;
 }
 
 /* BUTTONS */
