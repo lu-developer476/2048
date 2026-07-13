@@ -23,7 +23,7 @@ El proyecto está diseñado como un **juego web completo listo para producción*
 
 Aplicación desplegada en Render:
 
-https://your-app.onrender.com
+[(https://twothousandfortyeight.onrender.com/)
 
 ------------------------------------------------------------------------
 
