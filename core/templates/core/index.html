@@ -32,7 +32,11 @@
     <details class="nav-section">
       <summary>Controles</summary>
       <div class="nav-popover tips">
-        <p><span>Controles:</span> ↑↓←→ · WASD · Desliz</p>
+        <p class="tips-title">Cómo jugar</p>
+        <ul class="tips-list" aria-label="Controles disponibles">
+          <li><strong>Teclado:</strong> flechas o WASD</li>
+          <li><strong>Celular:</strong> deslizá el tablero</li>
+        </ul>
       </div>
     </details>
 
@@ -40,12 +44,12 @@
       <summary>Ranking</summary>
       <div class="nav-popover leaderboard">
         <div class="leaderboard-header">
-          <p class="eyebrow">ONLINE RANKING</p>
-          <h2>Top Players</h2>
+          <p class="eyebrow">Ranking online</p>
+          <h2>Mejores puntajes</h2>
         </div>
 
-        <div id="leaderboard-content" class="leaderboard-content">
-          <p class="leaderboard-empty">Todavía no hay puntajes cargados. Sé el primero en dejar tu marca.</p>
+        <div id="leaderboard-content" class="leaderboard-content" aria-live="polite">
+          <p class="leaderboard-empty">Sin puntajes todavía. Sé el primero en entrar al ranking.</p>
         </div>
       </div>
     </details>

@@ -569,7 +569,7 @@ function renderLeaderboard(results = []) {
   if (!Array.isArray(results) || results.length === 0) {
     leaderboardContentEl.innerHTML = `
       <p class="leaderboard-empty">
-        Todavía no hay puntajes cargados. Sé el primero en dejar tu marca.
+        Sin puntajes todavía. Sé el primero en entrar al ranking.
       </p>
     `;
     return;
@@ -587,12 +587,12 @@ function renderLeaderboard(results = []) {
 
           <div class="leaderboard-meta">
             <p class="leaderboard-name">${safeName}</p>
-            <p class="leaderboard-sub">Moves: ${moves}</p>
+            <p class="leaderboard-sub">Movimientos: ${moves}</p>
           </div>
 
           <div class="leaderboard-points">
             <strong>${points}</strong>
-            <span>PTS</span>
+            <span>pts</span>
           </div>
         </article>
       `;
@@ -628,7 +628,7 @@ async function loadLeaderboard() {
 
     leaderboardContentEl.innerHTML = `
       <p class="leaderboard-empty">
-        No se pudo cargar el ranking online.
+        No se pudo cargar el ranking. Intentá de nuevo más tarde.
       </p>
     `;
   }
