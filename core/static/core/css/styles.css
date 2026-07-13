@@ -734,14 +734,17 @@ body {
 .leaderboard-list {
   display: grid;
   gap: 8px;
+  width: 100%;
+  padding-inline: 4px;
 }
 
 .leaderboard-item {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, auto);
   align-items: center;
-  gap: 10px;
-  padding: 8px 10px;
+  gap: clamp(6px, 2vw, 10px);
+  width: 100%;
+  padding: 8px clamp(8px, 2vw, 10px);
   border-radius: 14px;
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(35,245,218,0.18);
@@ -784,8 +787,13 @@ body {
 }
 
 .leaderboard-points {
+  min-width: 0;
   text-align: right;
   white-space: nowrap;
+}
+
+.leaderboard-points strong {
+  font-size: clamp(0.74rem, 2vw, 0.9rem);
 }
 
 .leaderboard-points span {
