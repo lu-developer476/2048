@@ -16,12 +16,46 @@
 <body>
   <div class="noise"></div>
 
+  <nav class="game-navbar panel-glow" aria-label="Navegación del juego">
+    <a class="nav-brand" href="#board" aria-label="Ir al tablero 2048">
+      <span class="eyebrow">ARCADE PROTOCOLS</span>
+      <strong>2048<span>2077</span></strong>
+    </a>
+
+    <div class="nav-actions" aria-label="Acciones de partida">
+      <button id="new-game-btn" class="btn primary">Nueva</button>
+      <button id="undo-btn" class="btn secondary">Pausar</button>
+      <button id="clear-save-btn" class="btn danger">Reiniciar</button>
+    </div>
+
+    <details class="nav-section">
+      <summary>Controles</summary>
+      <div class="nav-popover tips">
+        <p><span>Controles:</span> ↑↓←→ · WASD · Desliz</p>
+        <p><span>Objetivo:</span> Llegá a 2048 y seguí superando el récord.</p>
+      </div>
+    </details>
+
+    <details class="nav-section nav-ranking">
+      <summary>Ranking</summary>
+      <div class="nav-popover leaderboard">
+        <div class="leaderboard-header">
+          <p class="eyebrow">ONLINE RANKING</p>
+          <h2>Top Players</h2>
+        </div>
+
+        <div id="leaderboard-content" class="leaderboard-content">
+          <p class="leaderboard-empty">Todavía no hay puntajes cargados. Sé el primero en dejar tu marca.</p>
+        </div>
+      </div>
+    </details>
+  </nav>
+
   <main class="game-shell">
     <section class="hud">
       <div class="brand-box panel-glow">
-        <p class="eyebrow">ARCADE PROTOCOLS</p>
-        <h1>2048<span>2077 EDITION</span></h1>
-        <p class="tagline">Fusioná bloques, alcanzá la puntuación máxima o superá el último récord. ¡A dominar el tablero!</p>
+        <p class="eyebrow">Misión activa</p>
+        <p class="tagline">Fusioná bloques y dominá el tablero sin perder de vista tus métricas.</p>
       </div>
 
       <div class="stats-grid">
@@ -119,29 +153,6 @@
       </div>
     </section>
 
-    <section class="aux-panels">
-      <div class="controls panel-glow">
-        <button id="new-game-btn" class="btn primary">Nueva partida</button>
-        <button id="undo-btn" class="btn secondary">Pausar</button>
-        <button id="clear-save-btn" class="btn danger">Reiniciar</button>
-      </div>
-
-      <div class="tips panel-glow">
-        <p><span>Controles:</span> ↑↓←→ · WASD · Desliz</p>
-        <p><span>Objetivo:</span> Llega a 2048 puntos, choom... luego intenta superarlo.</p>
-      </div>
-
-      <div class="leaderboard panel-glow">
-        <div class="leaderboard-header">
-          <p class="eyebrow">ONLINE RANKING</p>
-          <h2>Top Players</h2>
-        </div>
-
-        <div id="leaderboard-content" class="leaderboard-content">
-          <p class="leaderboard-empty">Todavía no hay puntajes cargados. Sé el primero en dejar tu marca.</p>
-        </div>
-      </div>
-    </section>
   </main>
 
   <div class="name-prompt-overlay hidden" id="name-prompt" role="dialog" aria-modal="true" aria-labelledby="name-prompt-title">
